@@ -14,8 +14,8 @@ const camera = new Camera(videoElement, {
     onFrame: async () => {
         await holistic.send({ image: videoElement });
     },
-    width: innerWidth,
-    height: innerHeight
+    width: videoElement.videoWidth,
+    height: videoElement.videoHeight
 });
 
 function enableCam(event) {
@@ -25,17 +25,37 @@ function enableCam(event) {
     holistic.onResults(onResults);
 }
 
-function onResults(results) {       
-    // Desktop 
-    if (window.innerWidth >= window.innerHeight){
-        canvasElement.width = window.innerWidth * 0.5;
-        canvasElement.height = window.innerHeight * 0.5; 
+async function sendLandmarkData(data) {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        const predhtml = document.getElementById("pred");
+        predhtml.innerHTML = result.prediction;
+        console.log('Response from FastAPI:', result);
+    } catch (error) {
+        console.error('Error in sending data:', error);
     }
-    // Mobile
-    else{
-        canvasElement.width = window.innerWidth * 0.5;
-        canvasElement.height = window.innerHeight * 0.5; 
-    }
+}
+
+function onResults(results) {     
+    const data = {
+        poseLandmarks: results.poseLandmarks,
+        faceLandmarks: results.faceLandmarks,
+        leftHandLandmarks: results.leftHandLandmarks,
+        rightHandLandmarks: results.rightHandLandmarks
+    };
+    sendLandmarkData(data);
 
     canvasCtx.save();
     canvasCtx.translate(canvasElement.width, 0);
