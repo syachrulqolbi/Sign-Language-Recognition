@@ -1,3 +1,4 @@
+/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -9,6 +10,7 @@
     font-family: "Poppins", sans-serif;
 }
 
+/* Color Variables */
 :root {
     --bg-color: #080808;
     --second-bg-color: #131313;
@@ -16,42 +18,42 @@
     --main-color: #04d9ff;
 }
 
+/* Base HTML Styles */
 html {
-    font-size: 60%;
-    margin: 0;
+    font-size: 60%; /* 1rem = 10px */
     height: 100%;
-    /* Not Scrolling */
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 body {
     background: var(--bg-color);
     color: var(--text-color);
-    margin: 0;
     height: 100%;
-    /* Not Scrolling */
-    overflow: hidden
+    overflow: hidden; /* Prevent scrolling */
 }
 
+/* Flex Container for Full-Page Content */
 .content {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
+/* Header Styling */
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 110px;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.3); /* Transparent black */
+    backdrop-filter: blur(10px); /* Adds blur effect */
     display: flex;
     align-items: center;
     z-index: 5;
 }
 
+/* Home Icon Styling */
 .home {
     display: inline-flex;
     justify-content: center;
@@ -61,8 +63,8 @@ header {
     background: transparent;
     font-size: 5rem;
     color: var(--main-color);
-    margin: 3rem 1.5rem 3rem;
-    transition: 0.3s ease-in-out;
+    margin: 3rem 1.5rem;
+    transition: transform 0.3s ease-in-out;
     margin-left: 6rem;
 }
 
@@ -70,39 +72,43 @@ header {
     transform: scale(1.25);
 }
 
+/* Logo Styling */
 .logo {
     font-size: 3rem;
-    padding: 4rem 3.5% 4rem;
+    padding: 4rem 3.5%;
     color: var(--text-color);
     font-weight: 800;
-    transition: 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .logo span {
     text-shadow: 0 0 25px var(--main-color);
 }
 
+/* General Span Color Override */
 span {
     color: var(--main-color);
 }
 
+/* Main Content Area Styling */
 main {
-    margin-top: 110px;
-    padding: 4rem 3.5% 4rem;
-    padding-bottom: 40px;
+    margin-top: 110px; /* Offset for fixed header */
+    padding: 4rem 3.5%;
     max-width: fit-content;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 40px;
 }
 
+/* Button Styling */
 #camButton {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-
 }
 
+/* General Button Styling */
 .btn {
     display: inline-block;
     padding: 1rem 2.8rem;
@@ -114,8 +120,8 @@ main {
     border: 2px solid transparent;
     letter-spacing: 0.1rem;
     font-weight: 600;
-    transition: 0.3s ease-in-out;
     cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .btn:hover {
@@ -123,8 +129,40 @@ main {
     box-shadow: 0 0 50px var(--main-color);
 }
 
+/* Heading Styling */
 .heading {
     font-size: 6rem;
     text-align: center;
     margin: 5rem 0;
+}
+
+/* Center Video and Canvas Elements */
+.camView {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+/* Responsive Styling for Video and Canvas */
+@media (max-width: 768px) {
+    .input_video, .output_canvas {
+        width: 90vw; /* 90% of viewport width */
+        height: 90vw; /* Maintain square aspect ratio */
+    }
+}
+
+@media (min-width: 769px) {
+    .input_video, .output_canvas {
+        width: 480px;
+        height: 480px; /* Fixed square size */
+    }
+}
+
+/* Ensure Video and Canvas Maintain Aspect Ratio */
+.input_video, .output_canvas {
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Force square aspect ratio */
+    display: block;
 }

@@ -1,37 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Language Detector</title>
+    
+    <!-- External CSS for styling -->
     <link rel="stylesheet" href="style.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!-- Boxicons for icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <!-- MediaPipe library for camera and hand tracking -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/holistic/holistic.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-<div class="content">
-    <header class="header">
-      <a class="home" href="https://sqnsportfolio.com"><i class='bx bx-file'></i></a>
-      <a class="logo">Sign Language
-        <span>Recognition</span>
-      </a>
-    </header>
-    <main>
-      <a id="camButton" class="btn">Loading Model..</a>
-      <div class="camView">
-        <video class="input_video"></video>
-        <canvas class="output_canvas"></canvas>
-      </div>
-      <a id="pred"></a>
-    </main>
-  </div>
-  <script type="module" src="script.js"></script>
+    <div class="content">
+        
+        <!-- Header with navigation and logo -->
+        <header class="header">
+            <!-- Link to portfolio or homepage -->
+            <a class="home" href="https://sqnsportfolio.com">
+                <i class='bx bx-file'></i>
+            </a>
+            
+            <!-- App title -->
+            <div class="logo">
+                Sign Language
+                <span>Recognition</span>
+            </div>
+        </header>
+        
+        <!-- Main content area -->
+        <main>
+            <!-- Button to show loading or start status for model -->
+            <button id="camButton" class="btn">Loading Model...</button>
+            
+            <!-- Camera view area with video and canvas elements for real-time processing -->
+            <div class="camView">
+                <video class="input_video" autoplay playsinline></video>
+                <canvas class="output_canvas"></canvas>
+            </div>
+            
+            <!-- Area to display prediction results -->
+            <div id="pred"></div>
+        </main>
+    </div>
+    
+    <!-- Link to external JavaScript module for app functionality -->
+    <script type="module" src="script.js"></script>
+</body>
 
 </html>
