@@ -1,20 +1,30 @@
 ISLR Model API Deployment Guide
-This guide explains how to deploy the Model API for the ISLR project using Uvicorn, a fast ASGI server implementation.
+This guide explains how to deploy the Model API for the ISLR project using docker implementation.
 
 Folder Structure
 Your project directory should have the following structure:
 
-ISLR/
-├── app/
-│   ├── dict_sign.csv         # Supporting data file
-│   ├── main.py               # FastAPI application
-│   ├── model.tflite          # Model file
-├── web/
-│   ├── index.html            # Frontend HTML file
-│   ├── script.js             # JavaScript for frontend logic
-│   ├── style.css             # CSS for styling
-├── Dockerfile                # Docker configuration (optional)
-├── requirements.txt          # Python dependencies
+app/
+├── dict_sign.csv                       # Supporting data file
+├── main.py                             # FastAPI application
+├── model.tflite                        # Model file
+
+module/
+├── islr/      
+|   ├── dict_sign.csv                   # Supporting data file   
+|   ├── main.py                         # FastAPI application
+|   ├── model.tflite                    # Model file
+├── llm/               
+|   ├── asl_sentence_generator.py       # Model file
+
+web/islr/
+├── videos/                             # ASL Sign Videos
+├── index.html                          # Frontend HTML file
+├── particles.js                        # JavaScript for background design
+├── script.js                           # JavaScript for frontend logic
+├── style.css                           # CSS for styling
+Dockerfile                              # Docker configuration (optional)
+requirements.txt                        # Python dependencies
 
 Prerequisites
 Before deploying the API, ensure the following requirements are met:

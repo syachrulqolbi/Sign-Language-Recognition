@@ -166,12 +166,28 @@ const camera = new Camera(videoElement, {
     height: canvasElement.height
 });
 
+// Function to remove the particles-js div with an easing effect
+function removeParticlesDiv() {
+  const particlesDiv = document.getElementById("particles-js");
+  if (particlesDiv) {
+      particlesDiv.style.transition = "opacity 0.5s ease-out"; // Add a fade-out transition
+      particlesDiv.style.opacity = "0"; // Start fade-out effect
+
+      // Remove the element after the transition
+      setTimeout(() => {
+          particlesDiv.remove();
+      }, 500); // Duration matches the transition
+  }
+}
+
 // Enable webcam and start processing
 function enableCam() {
-    enableWebcamButton.style.display = "none";
-    videoElement.style.display = "none";
-    camera.start();
-    holistic.onResults(onResults);
+  enableWebcamButton.style.display = "none"; // Hide the button
+  videoElement.style.display = "none"; // Hide the video element
+  removeParticlesDiv(); // Call the function to remove particles-js
+  // Assuming camera and holistic are defined in your existing script
+  camera.start();
+  holistic.onResults(onResults);
 }
 
 enableWebcamButton.innerHTML = "Enable Webcam";
@@ -259,15 +275,54 @@ function onResults(results) {
     canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
 
     if (drawSkeleton) {
-        canvasCtx.globalCompositeOperation = 'source-over';
-        drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS, { color: '#00FF00', lineWidth: 4 });
-        drawLandmarks(canvasCtx, results.poseLandmarks, { color: '#FF0000', lineWidth: 2 });
-        drawConnectors(canvasCtx, results.faceLandmarks, FACEMESH_TESSELATION, { color: '#C0C0C070', lineWidth: 1 });
-        drawConnectors(canvasCtx, results.leftHandLandmarks, HAND_CONNECTIONS, { color: '#CC0000', lineWidth: 5 });
-        drawLandmarks(canvasCtx, results.leftHandLandmarks, { color: '#00FF00', lineWidth: 2 });
-        drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS, { color: '#00CC00', lineWidth: 5 });
-        drawLandmarks(canvasCtx, results.rightHandLandmarks, { color: '#FF0000', lineWidth: 2 });
-    }
+      // Define color and line width variables
+      const lineColor = '#FFFFFF';
+      const circleColor = '#04D9FF';
+  
+      const connectorWidth = 1;
+      const landmarkWidth = 1;
+      const landmarkRadius = 3;
+  
+      // Set global composite operation
+      canvasCtx.globalCompositeOperation = 'source-over';
+  
+      // Draw landmarks and connectors with unified colors
+      drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS, {
+          color: lineColor,
+          lineWidth: connectorWidth,
+          radius: landmarkRadius
+      });
+      drawLandmarks(canvasCtx, results.poseLandmarks, {
+          color: circleColor,
+          lineWidth: landmarkWidth,
+          radius: landmarkRadius
+      });
+      drawConnectors(canvasCtx, results.faceLandmarks, FACEMESH_TESSELATION, {
+          color: lineColor,
+          lineWidth: connectorWidth,
+          radius: landmarkRadius
+      });
+      drawConnectors(canvasCtx, results.leftHandLandmarks, HAND_CONNECTIONS, {
+          color: lineColor,
+          lineWidth: connectorWidth,
+          radius: landmarkRadius
+      });
+      drawLandmarks(canvasCtx, results.leftHandLandmarks, {
+          color: circleColor,
+          lineWidth: landmarkWidth,
+          radius: landmarkRadius
+      });
+      drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS, {
+          color: lineColor,
+          lineWidth: connectorWidth,
+          radius: landmarkRadius
+      });
+      drawLandmarks(canvasCtx, results.rightHandLandmarks, {
+          color: circleColor,
+          lineWidth: landmarkWidth,
+          radius: landmarkRadius
+      });
+  }
 
     canvasCtx.restore();
 
@@ -306,3 +361,116 @@ const sliderValueDisplay = document.getElementById('sliderValue');
 predictionSpeedSlider.addEventListener('input', () => {
     sliderValueDisplay.textContent = predictionSpeedSlider.value;
 });
+
+/* ---- particles.js config ---- */
+
+particlesJS("particles-js", {
+    "particles": {
+      "number": {
+        "value": 200,
+        "density": {
+          "enable": true,
+          "value_area": 1000
+        }
+      },
+      "color": {
+        "value": "#04d9ff"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        },
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
+        }
+      },
+      "opacity": {
+        "value": 0.25,
+        "random": false,
+        "anim": {
+          "enable": true,
+          "speed": 1,
+          "opacity_min": 0.25,
+          "sync": true
+        }
+      },
+      "size": {
+        "value": 2.5,
+        "random": true,
+        "anim": {
+          "enable": true,
+          "speed": 1,
+          "size_min": 1,
+          "sync": true
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.25,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 6,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "grab"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 140,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200,
+          "duration": 0.4
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true
+  });
